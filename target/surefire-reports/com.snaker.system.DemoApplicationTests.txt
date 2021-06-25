@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.snaker.system.DemoApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 5.869 s <<< FAILURE! - in com.snaker.system.DemoApplicationTests
+contextLoads  Time elapsed: 0.011 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.snaker.system.DemoApplicationTests.contextLoads(DemoApplicationTests.java:37)
+
