@@ -326,15 +326,15 @@
             <properties>
                 <profiles.active>develop</profiles.active>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>local</id>
             <properties>
                 <profiles.active>local</profiles.active>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>preview</id>

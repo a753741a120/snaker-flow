@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.snaker.framework.config.annotation.MethodLog;
+import com.snaker.framework.config.entity.Form;
 import com.snaker.framework.flow.dto.ProcessDTO;
 import com.snaker.framework.flow.entity.Approval;
 import com.snaker.framework.flow.service.ApprovalManager;
@@ -13,6 +14,7 @@ import com.snaker.framework.security.shiro.ShiroUtils;
 import com.snaker.framework.utils.ConvertUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.snaker.engine.access.Page;
@@ -56,7 +58,8 @@ public class FlowController {
      * @return
      */
     @MethodLog(desc = "流程实例列表",master = "流程实例管理")
-    @ApiOperation(value = "流程实例列表",notes = "流程实例管理")
+    @ApiOperation(value = "流程实例列表",notes = "")
+    @ApiResponse(response = HistoryOrder.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "order", method= RequestMethod.GET)
     public R<Page<HistoryOrder>> order(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize) {
         Page<HistoryOrder> page = new Page<>();
@@ -173,7 +176,8 @@ public class FlowController {
      * @return
      */
     @MethodLog(desc = "将流程中的各环节表单以tab+iframe方式展现",master = "流程实例管理")
-    @ApiOperation(value = "将流程中的各环节表单以tab+iframe方式展现",notes = "流程实例管理")
+    @ApiOperation(value = "将流程中的各环节表单以tab+iframe方式展现",notes = "")
+    @ApiResponse(response = ProcessDTO.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "/all")
     public R<ProcessDTO> all(@RequestParam("processId") String processId,
                              @RequestParam("orderId") String orderId,
@@ -200,7 +204,8 @@ public class FlowController {
      * all页面以节点信息构造tab及加载iframe
      */
     @MethodLog(desc = "节点信息",master = "流程实例管理")
-    @ApiOperation(value = "节点信息",notes = "流程实例管理")
+    @ApiOperation(value = "节点信息",notes = "")
+    @ApiResponse(response = TaskModel.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "node/{processId}")
     public Object node(@PathVariable("processId") String processId) {
         Process process = facets.getEngine().process().getProcessById(processId);
@@ -222,7 +227,8 @@ public class FlowController {
      * @return
      */
     @MethodLog(desc = "流程审批列表",master = "流程实例管理")
-    @ApiOperation(value = "流程审批列表",notes = "流程实例管理")
+    @ApiOperation(value = "流程审批列表",notes = "")
+    @ApiResponse(response = Approval.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "getApprovalList/{orderId}/{taskName}")
     public R<List<Approval>> getApprovalList(@PathVariable("orderId") String orderId,@PathVariable("taskName") String taskName) {
 

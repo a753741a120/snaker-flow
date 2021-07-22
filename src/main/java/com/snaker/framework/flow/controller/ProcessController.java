@@ -17,15 +17,18 @@ package com.snaker.framework.flow.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.snaker.framework.config.annotation.MethodLog;
 import com.snaker.framework.enums.ResultEnums;
 import com.snaker.framework.exception.BizRuntimeException;
 import com.snaker.framework.flow.SnakerHelper;
 import com.snaker.framework.flow.dto.HistoryOrderDTO;
 import com.snaker.framework.flow.dto.ProcessDTO;
+import com.snaker.framework.flow.entity.Approval;
 import com.snaker.framework.flow.service.SnakerEngineFacets;
 import com.snaker.framework.security.shiro.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,7 +79,9 @@ public class ProcessController {
      *
      * @return
      */
-    @ApiOperation(value = "流程定义列表",notes = "流程定义管理")
+    @MethodLog(desc = "流程定义列表",master = "流程定义管理")
+    @ApiOperation(value = "流程定义列表",notes = "")
+    @ApiResponse(response = ProcessDTO.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "list")
     public R<PageInfo<ProcessDTO>> processList(@RequestParam("pageNo") Integer pageNo,
                                                @RequestParam("pageSize") Integer pageSize,
@@ -110,7 +115,9 @@ public class ProcessController {
      *
      * @return
      */
-    @ApiOperation(value = "设计流程定义[web流程设计器]",notes = "流程定义管理")
+    @MethodLog(desc = "设计流程定义[web流程设计器]",master = "流程定义管理")
+    @ApiOperation(value = "设计流程定义[web流程设计器]",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @GetMapping("designer/{processId}")
     public R<Map<Object, Object>> processDesigner(@PathVariable("processId") String processId) {
         Map<Object, Object> map = new HashMap<>();
@@ -130,7 +137,9 @@ public class ProcessController {
      *
      * @return
      */
-    @ApiOperation(value = "编辑流程定义列表展示",notes = "流程定义管理")
+    @MethodLog(desc = "编辑流程定义列表展示",master = "流程定义管理")
+    @ApiOperation(value = "编辑流程定义列表展示",notes = "")
+    @ApiResponse(response = ProcessDTO.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public R<ProcessDTO> processEdit(@PathVariable("id") String id) {
         ProcessDTO dto = new ProcessDTO();
@@ -153,7 +162,9 @@ public class ProcessController {
      * @param id
      * @return
      */
-    @ApiOperation(value = "根据流程定义ID，删除流程定义",notes = "流程定义管理")
+    @MethodLog(desc = "根据流程定义ID，删除流程定义",master = "流程定义管理")
+    @ApiOperation(value = "根据流程定义ID，删除流程定义",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @DeleteMapping(value = "delete/{id}")
     public boolean processDelete(@PathVariable("id") Integer id) {
         facets.getEngine().process().undeploy(String.valueOf(id));
@@ -167,7 +178,9 @@ public class ProcessController {
      * @param processId processId
      * @return
      */
-    @ApiOperation(value = "添加流程定义后的部署",notes = "流程定义管理")
+    @MethodLog(desc = "添加流程定义后的部署",master = "流程定义管理")
+    @ApiOperation(value = "添加流程定义后的部署",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "deploy/{processId}", method = RequestMethod.POST)
     public void processDeploy(@RequestParam(value = "snakerFile") MultipartFile snakerFile, @PathVariable("processId") Integer processId) throws BizRuntimeException {
         InputStream input = null;
@@ -198,7 +211,9 @@ public class ProcessController {
      * @param model
      * @return
      */
-    @ApiOperation(value = "保存流程定义[web流程设计器]",notes = "流程定义管理")
+    @MethodLog(desc = "保存流程定义[web流程设计器]",master = "流程定义管理")
+    @ApiOperation(value = "保存流程定义[web流程设计器]",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @PutMapping(value = "deployXml/{id}")
     public boolean processDeploy(@PathVariable("id") String id,@RequestParam("model") String model) {
         InputStream input = null;
@@ -232,16 +247,19 @@ public class ProcessController {
      * @param processName processName
      * @return
      */
-    @ApiOperation(value = "启动流程",notes = "流程定义管理")
+    @MethodLog(desc = "启动流程",master = "流程定义管理")
+    @ApiOperation(value = "启动流程",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "start", method = RequestMethod.GET)
-    public boolean processStart(Model model, String processName) {
+    public boolean processStart(String processName) {
         facets.startInstanceByName(processName, null, ShiroUtils.getUsername(), null);
         //这里前端做重定向
 //        return "redirect:/snaker/process/list";
         return true;
     }
-
-    @ApiOperation(value = "json",notes = "流程定义管理")
+    @MethodLog(desc = "json",master = "流程定义管理")
+    @ApiOperation(value = "json",notes = "")
+    @ApiResponse(response = Process.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "json", method = RequestMethod.GET)
     public R<Object> json(String processId, String orderId) {
         Process process = facets.getEngine().process().getProcessById(processId);
@@ -268,7 +286,9 @@ public class ProcessController {
      * @param orderId
      * @return
      */
-    @ApiOperation(value = "查看流程图",notes = "流程定义管理")
+    @MethodLog(desc = "查看流程图",master = "流程定义")
+    @ApiOperation(value = "查看流程图",notes = "")
+    @ApiResponse(response = HistoryOrderDTO.class,code = 0,message = "code=0时返回")
     @GetMapping("/display/{orderId}/{processId}")
     public R<HistoryOrderDTO> display(@PathVariable("orderId") String orderId,@PathVariable("processId")String processId) {
         HistoryOrderDTO dto = new HistoryOrderDTO();

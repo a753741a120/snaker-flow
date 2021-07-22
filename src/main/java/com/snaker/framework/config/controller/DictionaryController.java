@@ -9,6 +9,7 @@ import com.snaker.framework.config.entity.DictionaryItem;
 import com.snaker.framework.config.service.DictionaryManager;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,7 +36,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "字典列表",master = "配置字典管理")
-	@ApiOperation(value = "字典列表",notes = "配置字典管理")
+	@ApiOperation(value = "字典列表",notes = "")
+	@ApiResponse(response = Dictionary.class,code = 0,message = "code=0时返回")
 	@GetMapping("/list")
 	public R<PageInfo<Dictionary>> list(@RequestParam("pageNum")Integer pageNo,
 										@RequestParam("pageSize")Integer pageSize) {
@@ -48,7 +50,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "获取单个配置字典信息",master = "配置字典管理")
-	@ApiOperation(value = "获取单个配置字典信息",notes = "配置字典管理")
+	@ApiOperation(value = "获取单个配置字典信息",notes = "")
+	@ApiResponse(response = Dictionary.class,code = 0,message = "code=0时返回")
 	@GetMapping("/get/{id}")
 	public R<Dictionary> get(@PathVariable("id")Integer id){
 		return R.ok(dictionaryManager.getById(id));
@@ -60,7 +63,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "保存",master = "配置字典管理")
-	@ApiOperation(value = "保存",notes = "配置字典管理")
+	@ApiOperation(value = "保存",notes = "")
+	@ApiResponse(response = Dictionary.class,code = 0,message = "code=0时返回")
 	@PostMapping("/save")
 	public boolean save(@RequestBody @Valid Dictionary dictionary){
 		return dictionaryManager.save(dictionary);
@@ -72,7 +76,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "修改",master = "配置字典管理")
-	@ApiOperation(value = "修改",notes = "配置字典管理")
+	@ApiOperation(value = "修改",notes = "")
+	@ApiResponse(response = DictionaryDTO.class,code = 0,message = "code=0时返回")
 	@PutMapping(value = "/update/{id}")
 	public boolean update(@PathVariable("id")Integer id,
 						  @RequestBody DictionaryDTO dictionary) {
@@ -85,7 +90,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "根据主键ID删除配置字典实体",master = "配置字典管理")
-	@ApiOperation(value = "删除",notes = "配置字典管理")
+	@ApiOperation(value = "删除",notes = "")
+	@ApiResponse(response = Dictionary.class,code = 0,message = "code=0时返回")
 	@DeleteMapping(value = "/delete/{id}")
 	public boolean delete(@PathVariable("id") Long id) {
 		return dictionaryManager.removeById(id);
@@ -97,7 +103,8 @@ public class DictionaryController {
      * @return
      */
 	@MethodLog(desc = "根据字典名称获取数据",master = "配置字典管理")
-	@ApiOperation(value = "根据字典名称获取数据",notes = "配置字典管理")
+	@ApiOperation(value = "根据字典名称获取数据",notes = "")
+	@ApiResponse(response = DictionaryItem.class,code = 0,message = "code=0时返回")
     @GetMapping("/getItemsByName")
     public R<List<DictionaryItem>> getItemsByName(@RequestParam("config") String config) {
 		List<DictionaryItem> list = dictionaryManager.getItemsByName(config);
@@ -109,7 +116,8 @@ public class DictionaryController {
 	 * @return
 	 */
 	@MethodLog(desc = "返回字典列表 无分页",master = "配置字典管理")
-	@ApiOperation(value = "返回字典列表(无分页)",notes = "配置字典管理")
+	@ApiOperation(value = "返回字典列表(无分页)",notes = "")
+	@ApiResponse(response = Dictionary.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "/dicts")
     public R<List<Dictionary>> getDicts() {
         return R.ok(dictionaryManager.list());

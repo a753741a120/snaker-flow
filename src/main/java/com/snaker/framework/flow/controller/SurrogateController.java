@@ -17,10 +17,12 @@ package com.snaker.framework.flow.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.snaker.framework.config.annotation.MethodLog;
 import com.snaker.framework.exception.BizRuntimeException;
+import com.snaker.framework.flow.dto.HistoryOrderDTO;
 import com.snaker.framework.flow.dto.SurrogateDTO;
 import com.snaker.framework.flow.service.SnakerEngineFacets;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
@@ -49,7 +51,8 @@ public class SurrogateController {
 	 * @return
 	 */
 	@MethodLog(desc = "委托授权列表",master = "委托授权管理")
-	@ApiOperation(value = "委托授权列表",notes = "委托授权管理")
+	@ApiOperation(value = "委托授权列表",notes = "")
+	@ApiResponse(response = Surrogate.class,code = 0,message = "code=0时返回")
 	@GetMapping(value = "list")
 	public R<Page<Surrogate>> list(@RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize) {
 		Page<Surrogate> page = new Page<>();
@@ -65,7 +68,8 @@ public class SurrogateController {
 	 * @return
 	 */
 	@MethodLog(desc = "获取委托对象",master = "委托授权管理")
-	@ApiOperation(value = "获取委托对象",notes = "委托授权管理")
+	@ApiOperation(value = "获取委托对象",notes = "")
+	@ApiResponse(response = SurrogateDTO.class,code = 0,message = "code=0时返回")
 	@GetMapping(value = "get/{id}")
 	public SurrogateDTO get(@PathVariable("id") String id) {
 		SurrogateDTO dto = new SurrogateDTO();
@@ -85,7 +89,8 @@ public class SurrogateController {
 	 * @return
 	 */
 	@MethodLog(desc = "修改",master = "委托授权管理")
-	@ApiOperation(value = "修改",notes = "委托授权管理")
+	@ApiOperation(value = "修改",notes = "")
+	@ApiResponse(response = Surrogate.class,code = 0,message = "code=0时返回")
 	@PutMapping(value = "update/{id}")
 	public boolean update(Surrogate surrogate,@PathVariable("id")Integer id) {
 		try {
@@ -107,7 +112,8 @@ public class SurrogateController {
 	 * @return boolean
 	 */
 	@MethodLog(desc = "删除",master = "委托授权管理")
-	@ApiOperation(value = "删除",notes = "委托授权管理")
+	@ApiOperation(value = "删除",notes = "")
+	@ApiResponse(response = Surrogate.class,code = 0,message = "code=0时返回")
 	@DeleteMapping(value = "delete/{id}")
 	public boolean delete(@PathVariable("id") String id) {
 		try {

@@ -3,6 +3,7 @@ package com.snaker.framework.config.controller;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.github.pagehelper.PageInfo;
 import com.snaker.framework.config.annotation.MethodLog;
+import com.snaker.framework.config.entity.Dictionary;
 import com.snaker.framework.config.entity.Field;
 import com.snaker.framework.config.entity.Form;
 import com.snaker.framework.config.service.DynamicFormManager;
@@ -10,6 +11,7 @@ import com.snaker.framework.security.shiro.ShiroUtils;
 import com.snaker.framework.utils.DateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.snaker.engine.helper.JsonHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,8 @@ public class DynamicFormController {
      * @return
      */
     @MethodLog(desc = "动态表单列表",master = "动态表单管理")
-    @ApiOperation(value = "动态表单列表",notes = "动态表单管理")
+    @ApiOperation(value = "动态表单列表",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @GetMapping("/list")
     public R<PageInfo<Form>> list(@RequestParam("pageNum")Integer pageNum, @RequestParam("pageSize")Integer pageSize) {
         return R.ok(dynamicFormManager.list(pageNum,pageSize));
@@ -52,7 +55,8 @@ public class DynamicFormController {
      * @return bean
      */
     @MethodLog(desc = "根据ID获取表单单个信息",master = "动态表单管理")
-    @ApiOperation(value = "根据ID获取表单单个信息",notes = "动态表单管理")
+    @ApiOperation(value = "根据ID获取表单单个信息",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @GetMapping("/get/{id}")
     public R<Form> get(@PathVariable("id") Long id) {
         return R.ok(dynamicFormManager.getById(id));
@@ -65,7 +69,8 @@ public class DynamicFormController {
      * @return boolean
      */
     @MethodLog(desc = "修改",master = "动态表单管理")
-    @ApiOperation(value = "修改",notes = "动态表单管理")
+    @ApiOperation(value = "修改",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @PutMapping("/update/{id}")
     public boolean update(@PathVariable("id")Integer id, @RequestBody Form form) {
         form.setCreator(ShiroUtils.getUsername());
@@ -82,7 +87,8 @@ public class DynamicFormController {
      * @return boolean
      */
     @MethodLog(desc = "保存",master = "动态表单管理")
-    @ApiOperation(value = "保存",notes = "动态表单管理")
+    @ApiOperation(value = "保存",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @PostMapping(value = "processor/{formId}")
     public Boolean processor(@PathVariable("formId") Long formId, @RequestParam("parseForm") String parseForm) {
         Form entity = null;
@@ -117,7 +123,8 @@ public class DynamicFormController {
      * @return boolean
      */
     @MethodLog(desc = "删除",master = "动态表单管理")
-    @ApiOperation(value = "删除",notes = "动态表单管理")
+    @ApiOperation(value = "删除",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @DeleteMapping("delete/{id}")
     public boolean delete(@PathVariable("id") Long id) {
         return dynamicFormManager.removeById(id);
@@ -131,7 +138,8 @@ public class DynamicFormController {
      * @return
      */
     @MethodLog(desc = "获取表单",master = "动态表单管理")
-    @ApiOperation(value = "获取表单",notes = "动态表单管理")
+    @ApiOperation(value = "获取表单",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @GetMapping(value = "formData/{id}/{orderId}")
     public Map<String, Object> formData(@PathVariable("id") Long id, @PathVariable("orderId") String orderId) {
         Form entity = dynamicFormManager.getById(id);
@@ -147,7 +155,8 @@ public class DynamicFormController {
      * @return
      */
     @MethodLog(desc = "录入数据",master = "动态表单管理")
-    @ApiOperation(value = "录入数据",notes = "动态表单管理")
+    @ApiOperation(value = "录入数据",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @RequestMapping(value = "use/{id}")
     public R<Map<Object, Object>> use(@PathVariable("id") Long id,
                                       @RequestParam(value = "processId",required = false) String processId,
@@ -177,7 +186,8 @@ public class DynamicFormController {
      * @return
      */
     @MethodLog(desc = "提交流程",master = "动态表单管理")
-    @ApiOperation(value = "提交流程",notes = "动态表单管理")
+    @ApiOperation(value = "提交流程",notes = "")
+    @ApiResponse(response = Form.class,code = 0,message = "code=0时返回")
     @PostMapping("submit/{formId}")
     public boolean submit(HttpServletRequest request, @PathVariable("formId") Long formId) {
         String processId = request.getParameter(PARA_PROCESSID);

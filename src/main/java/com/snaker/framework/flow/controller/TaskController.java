@@ -11,12 +11,14 @@ import com.snaker.framework.flow.service.SnakerEngineFacets;
 import com.snaker.framework.security.shiro.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryOrder;
+import org.snaker.engine.entity.Surrogate;
 import org.snaker.engine.entity.Task;
 import org.snaker.engine.entity.WorkItem;
 import org.snaker.engine.model.TaskModel.TaskType;
@@ -49,7 +51,8 @@ public class TaskController {
 	 * @return
 	 */
 	@MethodLog(desc = "查询协办任务列表",master = "流程引擎管理")
-	@ApiOperation(value = "查询协办任务列表",notes = "流程引擎管理")
+	@ApiOperation(value = "查询协办任务列表",notes = "")
+	@ApiResponse(response = Surrogate.class,code = 0,message = "code=0时返回")
 	@RequestMapping(value = "list", method=RequestMethod.GET)
 	public R<Object> homeTaskList() {
 		Map<Object, Object> map = new HashMap<>();
@@ -78,7 +81,6 @@ public class TaskController {
 //				.setOperators(assignees)
 				.setState(1));
 		map.put("majorWorks",majorWorks);
-		map.put("majorWorks", majorWorks);
 		map.put("majorTotal", majorPage.getTotalCount());
 		map.put("aidantWorks", aidantWorks);
 		map.put("aidantTotal", aidantPage.getTotalCount());
@@ -92,7 +94,8 @@ public class TaskController {
 	 * @return
 	 */
 	@MethodLog(desc = "查询待办任务列表",master = "流程引擎管理")
-	@ApiOperation(value = "查询待办任务列表",notes = "流程引擎管理")
+	@ApiOperation(value = "查询待办任务列表",notes = "")
+	@ApiResponse(response = WorkItem.class,code = 0,message = "code=0时返回")
 	@RequestMapping(value = "user", method=RequestMethod.GET)
 	public R<List<WorkItem>> userTaskList(@RequestParam("pageNo")Integer pageNo, @RequestParam("pageSize")Integer pageSize) {
 		Page<WorkItem> page = new Page<>();
@@ -112,7 +115,8 @@ public class TaskController {
 	 * @throws BizRuntimeException
 	 */
 	@MethodLog(desc = "保存",master = "流程引擎管理")
-	@ApiOperation(value = "保存",notes = "流程引擎管理")
+	@ApiOperation(value = "保存",notes = "")
+	@ApiResponse(response = Task.class,code = 0,message = "code=0时返回")
     @PutMapping(value = "save/{orderId}")
     public boolean addTaskActor(@PathVariable("orderId") Integer orderId,
 								@RequestParam("taskName") String taskName,
@@ -162,7 +166,8 @@ public class TaskController {
 	 * @return
 	 */
 	@MethodLog(desc = "活动任务列表",master = "流程引擎管理")
-	@ApiOperation(value = "活动任务列表",notes = "流程引擎管理")
+	@ApiOperation(value = "活动任务列表",notes = "")
+	@ApiResponse(response = WorkItem.class,code = 0,message = "code=0时返回")
 	@RequestMapping(value = "active/more", method=RequestMethod.GET)
 	public R<Map<Object, Object>> activeTaskList(@RequestParam("pageNo")Integer pageNo,
 												 @RequestParam("pageSize")Integer pageSize,
@@ -188,7 +193,8 @@ public class TaskController {
 	 * @return
 	 */
 	@MethodLog(desc = "活动任务历史流程列表",master = "流程引擎管理")
-	@ApiOperation(value = "活动任务历史流程列表",notes = "流程引擎管理")
+	@ApiOperation(value = "活动任务历史流程列表",notes = "")
+	@ApiResponse(response = com.snaker.framework.flow.entity.HistoryOrder.class,code = 0,message = "code=0时返回")
 	@RequestMapping(value = "active/ccmore", method=RequestMethod.GET)
 	public R<PageInfo<com.snaker.framework.flow.entity.HistoryOrder>> activeCCList(@RequestParam("pageNo")Integer pageNo, @RequestParam("pageSize")Integer pageSize) {
 //		Page<HistoryOrder> page = new Page<>();
@@ -215,7 +221,8 @@ public class TaskController {
 	 * @return
 	 */
 	@MethodLog(desc = "历史完成任务列表",master = "流程引擎管理")
-	@ApiOperation(value = "历史完成任务列表",notes = "流程引擎管理")
+	@ApiOperation(value = "历史完成任务列表",notes = "")
+	@ApiResponse(response = WorkItem.class,code = 0,message = "code=0时返回")
 	@RequestMapping(value = "history", method=RequestMethod.GET)
 	public R<Page<WorkItem>> historyTaskList(@RequestParam("pageNo")Integer pageNo, @RequestParam("pageSize")Integer pageSize) {
 		Page<WorkItem> page = new Page<>();
